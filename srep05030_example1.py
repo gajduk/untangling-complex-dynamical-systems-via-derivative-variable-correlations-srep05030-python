@@ -14,7 +14,7 @@ def example1():
 	#----------------------------------------
 	#This is the original time series data Figure 2, note that the initial conditions are randomly generated (from a normal distribution) so some of the values may vary
 	#----------------------------------------
-	t = [0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8,4.0]
+	t = [0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8]
 	x = [[-0.12389172666, 0.587579759577, -0.311814570479, -0.414858833614, -0.0738960295328, -0.660661139367],
 		[-1.41899704578, -1.40545533491, -0.483119910044, -1.11585183184, 1.34934504315, -0.432930242154],
 		[-2.5422552576, -4.07820651294, -1.73518916233, -0.800369827126, 2.55187805734, -0.169093037506],
@@ -40,11 +40,11 @@ def example1():
 	#Plot the time series by using
 	'''
 	import matplotlib.pylab as plt
-	plt.plot(t,y)
+	plt.plot(np.matrix(t).T,np.matrix(x))
 	plt.xlabel('Time')
-	plt.ylable()
-	plt.show()
-	'''	
+	plt.ylabel('Gene regulation')
+	plt.savefig('time_series.png')
+	'''
 
 	#----------------------------------------
 	#the function for example 1 as shown in Eq.1 of the paper
@@ -60,21 +60,25 @@ def example1():
 	#Visualize the original adjacency matrix and the predicted one and compare you can use
 	'''
 	import matplotlib.pylab as plt
-	plt.subplot(1,3,1)
+	fig, axes = plt.subplots(nrows=1, ncols=3)
+
+
 	plt.set_cmap('bwr')
-	plt.imshow(A0,interpolation='none', vmin=-10, vmax=10)
-	plt.title('Original adjacency matrix')
-	plt.subplot(1,3,2)
+	vmin,vmax = -10,10
+	im = axes.flat[0].imshow(A0,interpolation='none', vmin=vmin, vmax=vmax)
+	axes.flat[0].set_title('Original A')
 	plt.set_cmap('bwr')
-	plt.imshow(reconstructed_A,interpolation='none', vmin=-10, vmax=10)
-	plt.title('Reconstructed ajacency matrix')
-	plt.subplot(1,3,3)
+	im = axes.flat[1].imshow(reconstructed_A,interpolation='none', vmin=vmin, vmax=vmax)
+	axes.flat[1].set_title('Reconstructed A')
 	plt.set_cmap('bwr')
-	plt.imshow(np.abs(reconstructed_A-A0),interpolation='none', vmin=-10, vmax=10)
-	plt.title('Difference')
-	plt.show()
+	im = axes.flat[2].imshow(np.abs(reconstructed_A-A0),interpolation='none', vmin=vmin, vmax=vmax)
+	axes.flat[2].set_title('Difference')
+
+	fig.subplots_adjust(right=0.8)
+	cbar_ax = fig.add_axes([0.85, 0.35, 0.02, 0.3])
+	fig.colorbar(im, cax=cbar_ax)
+	plt.savefig('adjacency_matrix.png')
 	'''
-	
 
 if __name__ == "__main__":
 	example1()
