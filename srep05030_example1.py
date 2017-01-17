@@ -38,27 +38,27 @@ def example1():
 
 	
 	#Plot the time series by using
-	'''
+
 	import matplotlib.pylab as plt
 	plt.plot(np.matrix(t).T,np.matrix(x))
 	plt.xlabel('Time')
 	plt.ylabel('Gene regulation')
-	plt.savefig('time_series.png')
-	'''
+	plt.savefig('example1_time_series.png')
+
 
 	#----------------------------------------
 	#the function for example 1 as shown in Eq.1 of the paper
 	#----------------------------------------
 	def f(x):
 		return - x
-	def h(x):
+	def h(x,i,k):
 		return math.tanh(x)
 
 	reconstructed_A = network_reconstruction(x,A0,f,h)
 
 		
 	#Visualize the original adjacency matrix and the predicted one and compare you can use
-	'''
+
 	import matplotlib.pylab as plt
 	fig, axes = plt.subplots(nrows=1, ncols=3)
 
@@ -77,8 +77,8 @@ def example1():
 	fig.subplots_adjust(right=0.8)
 	cbar_ax = fig.add_axes([0.85, 0.35, 0.02, 0.3])
 	fig.colorbar(im, cax=cbar_ax)
-	plt.savefig('adjacency_matrix.png')
-	'''
+	plt.savefig('example1_adjacency_matrix.png')
+
 
 if __name__ == "__main__":
 	example1()
